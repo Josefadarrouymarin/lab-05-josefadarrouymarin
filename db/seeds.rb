@@ -20,7 +20,7 @@ puts "Creating messages..."
   Message.create!(
     chat_id: chats.sample.id,
     user_id: users.sample.id,
-    body: "Este es un mensaje de prueba"
+    body: "This is a test message"
   )
 end
 
