@@ -2,18 +2,20 @@
 
 <%= form_with(model: @chat) do |form| %>
   <% if @chat.errors.any? %>
-    <ul>
-      <% @chat.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
+    <div id="error_explanation">
+      <ul>
+        <% @chat.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 
   <%= form.label :sender_id, "Sender" %>
-  <%= form.select :sender_id, User.all.collect { |u| [u.first_name, u.id] } %><br>
+  <%= form.select :sender_id, User.all.collect { |u| ["#{u.first_name} #{u.last_name}", u.id] } %><br>
 
   <%= form.label :receiver_id, "Receiver" %>
-  <%= form.select :receiver_id, User.all.collect { |u| [u.first_name, u.id] } %><br>
+  <%= form.select :receiver_id, User.all.collect { |u| ["#{u.first_name} #{u.last_name}", u.id] } %><br>
 
   <%= form.submit %>
 <% end %>

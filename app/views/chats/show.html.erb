@@ -1,6 +1,17 @@
-<h1>Chat <%= @chat.id %></h1>
-<p><strong>Sender ID:</strong> <%= @chat.sender_id %></p>
-<p><strong>Receiver ID:</strong> <%= @chat.receiver_id %></p>
-<p><strong>Created At:</strong> <%= @chat.created_at.strftime("%F %T") %></p>
+<h2>Chat Details</h2>
 
-<%= link_to 'Back to Chats', chats_path %>
+<p><strong>Sender:</strong> <%= @chat.sender.first_name %> <%= @chat.sender.last_name %></p>
+<p><strong>Receiver:</strong> <%= @chat.receiver.first_name %> <%= @chat.receiver.last_name %></p>
+
+<h3>Messages</h3>
+<ul>
+  <% @chat.messages.each do |msg| %>
+    <li>
+      <strong><%= msg.user.first_name %>:</strong> <%= msg.body %> —
+      <%= link_to 'View Message', message_path(msg) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Edit chat', edit_chat_path(@chat) %> |
+<%= link_to 'Back to chats', chats_path %>

@@ -1,0 +1,29 @@
+<h1>Edit Chat</h1>
+
+<%= form_with model: @chat do |form| %>
+  <% if @chat.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @chat.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :sender_id %><br>
+    <%= form.number_field :sender_id %>
+  </div>
+
+  <div>
+    <%= form.label :receiver_id %><br>
+    <%= form.number_field :receiver_id %>
+  </div>
+
+  <div>
+    <%= form.submit "Update Chat" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Chats', chats_path %>

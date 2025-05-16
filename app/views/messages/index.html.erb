@@ -6,18 +6,19 @@
   <thead>
     <tr>
       <th>Chat ID</th>
-      <th>User ID</th>
+      <th>Author</th>
       <th>Body</th>
-      <th>Show</th>
+      <th colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @messages.each do |message| %>
       <tr>
         <td><%= message.chat_id %></td>
-        <td><%= message.user_id %></td>
+        <td><%= message.user.first_name %> <%= message.user.last_name %></td>
         <td><%= message.body %></td>
-        <td><%= link_to 'Show', message_path(message) %></td>
+        <td><%= link_to 'Show', message_path(message), class: 'btn btn-sm btn-outline-primary' %></td>
+        <td><%= link_to 'Edit', edit_message_path(message), class: 'btn btn-sm btn-outline-secondary' %></td>
       </tr>
     <% end %>
   </tbody>

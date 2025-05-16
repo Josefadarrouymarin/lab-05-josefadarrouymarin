@@ -1,5 +1,25 @@
-<h1>User <%= @user.id %></h1>
-<p><strong>Email:</strong> <%= @user.email %></p>
-<p><strong>Name:</strong> <%= "#{@user.first_name} #{@user.last_name}" %></p>
+<h2>User Details</h2>
 
-<%= link_to 'Back to Users', users_path %>
+<p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
+<p><strong>Email:</strong> <%= @user.email %></p>
+
+<h3>Chats Participated</h3>
+<ul>
+  <% Chat.where(sender: @user).or(Chat.where(receiver: @user)).each do |chat| %>
+    <li>
+      Chat with 
+      <%= @user == chat.sender ? chat.receiver.first_name : chat.sender.first_name %>
+      — <%= link_to 'View Chat', chat_path(chat) %>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Messages Sent</h3>
+<ul>
+  <% @user.messages.each do |msg| %>
+    <li><%= msg.body %> — <%= link_to 'View Message', message_path(msg) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Edit user', edit_user_path(@user) %> |
+<%= link_to 'Back to users', users_path %>

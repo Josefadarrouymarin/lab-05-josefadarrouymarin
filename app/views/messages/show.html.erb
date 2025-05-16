@@ -1,7 +1,22 @@
-<h1>Message <%= @message.id %></h1>
-<p><strong>Chat ID:</strong> <%= @message.chat_id %></p>
-<p><strong>User ID:</strong> <%= @message.user_id %></p>
-<p><strong>Body:</strong> <%= @message.body %></p>
-<p><strong>Created At:</strong> <%= @message.created_at.strftime("%F %T") %></p>
+<h2>Message Details</h2>
 
-<%= link_to 'Back to Messages', messages_path %>
+<p>
+  <strong>Author:</strong> <%= @message.user.first_name %> <%= @message.user.last_name %>
+</p>
+
+<p>
+  <strong>Chat between:</strong>
+  <%= @message.chat.sender.first_name %> <%= @message.chat.sender.last_name %>
+  and
+  <%= @message.chat.receiver.first_name %> <%= @message.chat.receiver.last_name %>
+</p>
+
+<p>
+  <strong>Message content:</strong> <%= @message.body %></p>
+
+<p>
+  <%= link_to 'View full chat', chat_path(@message.chat) %>
+</p>
+
+<%= link_to 'Edit message', edit_message_path(@message) %> |
+<%= link_to 'Back to messages', messages_path %>
