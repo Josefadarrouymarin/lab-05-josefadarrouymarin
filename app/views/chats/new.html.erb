@@ -2,7 +2,7 @@
 
 <%= form_with(model: @chat) do |form| %>
   <% if @chat.errors.any? %>
-    <div id="error_explanation">
+    <div class="alert alert-danger">
       <ul>
         <% @chat.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -11,11 +11,12 @@
     </div>
   <% end %>
 
-  <%= form.label :sender_id, "Sender" %>
-  <%= form.select :sender_id, User.all.collect { |u| ["#{u.first_name} #{u.last_name}", u.id] } %><br>
+  <div class="mb-3">
+    <%= form.label :receiver_id, "Receiver", class: "form-label" %>
+    <%= form.select :receiver_id, User.where.not(id: current_user.id).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, {}, class: "form-select" %>
+  </div>
 
-  <%= form.label :receiver_id, "Receiver" %>
-  <%= form.select :receiver_id, User.all.collect { |u| ["#{u.first_name} #{u.last_name}", u.id] } %><br>
-
-  <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit "Create Chat", class: "btn btn-primary" %>
+  </div>
 <% end %>

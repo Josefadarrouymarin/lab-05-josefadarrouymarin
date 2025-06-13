@@ -3,19 +3,19 @@ class ChatsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @chats = Chat.all
+    @chats = Chat.involving(current_user)
   end
 
   def show
-    @chat = Chat.find(params[:id])
+    # @chat ya está cargado por load_and_authorize_resource
   end
 
   def new
-    @chat = Chat.new
+    # @chat ya está inicializado por load_and_authorize_resource
   end
 
   def create
-    @chat = Chat.new(chat_params)
+    @chat.sender = current_user  # Forzamos que el sender sea el usuario logueado
     if @chat.save
       redirect_to @chat, notice: 'Chat was successfully created.'
     else
@@ -24,11 +24,10 @@ class ChatsController < ApplicationController
   end
 
   def edit
-    @chat = Chat.find(params[:id])
+    # @chat ya está cargado por load_and_authorize_resource
   end
 
   def update
-    @chat = Chat.find(params[:id])
     if @chat.update(chat_params)
       redirect_to @chat
     else
@@ -37,7 +36,6 @@ class ChatsController < ApplicationController
   end
 
   def destroy
-    @chat = Chat.find(params[:id])
     @chat.destroy
     redirect_to chats_path, notice: 'Chat was successfully deleted.'
   end
@@ -45,6 +43,7 @@ class ChatsController < ApplicationController
   private
 
   def chat_params
-    params.require(:chat).permit(:sender_id, :receiver_id)
+    params.require(:chat).permit(:receiver_id)
   end
 end
+
